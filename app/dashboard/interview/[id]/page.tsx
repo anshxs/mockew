@@ -1,21 +1,53 @@
-// app/dashboard/interview/[id]/page.tsx
+// Add the `"use client"` directive at the top of the file
+'use client';
 
 import Image from "next/image";
+import React from "react";
 import { redirect } from "next/navigation";
-import { getInterviewById } from "@/lib/actions/general.action";
-import { getRandomInterviewCover } from "@/lib/utils";
+import { getInterviewById } from "@/lib/actions/general.action"; // Your server-side logic for fetching data
+import { getRandomInterviewCover } from "@/lib/utils"; // Your utility for cover image
+import { useEffect, useState } from "react";
 
-// ⛔️ DO NOT import `AgentWrapper` or `DisplayTechIcons` here
+// Define types for the props expected in the component
+type Props = {
+  params: {
+    id: string;
+  };
+};
 
-const InterviewDetails = async ({ params }: { params: { id: string } }) => {
-  const id = params.id;
+const InterviewDetails = ({ params }: Props) => {
+  const [interview, setInterview] = useState<any>(null);
+  const [AgentWrapper, setAgentWrapper] = useState<any>(null);
+  const [DisplayTechIcons, setDisplayTechIcons] = useState<any>(null);
 
-  const interview = await getInterviewById(id);
-  if (!interview) redirect("/dashboard");
+  const { id } = React.use(params);
 
-  // ✅ Now safely import client components inside JSX
-  const AgentWrapper = (await import("@/components/AgentWrapper")).default;
-  const DisplayTechIcons = (await import("@/components/DisplayTechIcons")).default;
+  useEffect(() => {
+    // Fetch the interview data on the client side
+    const fetchData = async () => {
+      const interviewData = await getInterviewById(id);
+      if (!interviewData) {
+        redirect("/dashboard");
+      }
+      setInterview(interviewData);
+    };
+
+    // Dynamically load the client components
+    const loadComponents = async () => {
+      const { default: AgentWrapper } = await import("@/components/AgentWrapper");
+      const { default: DisplayTechIcons } = await import("@/components/DisplayTechIcons");
+      setAgentWrapper(() => AgentWrapper);
+      setDisplayTechIcons(() => DisplayTechIcons);
+    };
+
+    fetchData();
+    loadComponents();
+  }, [id]);
+
+  // If the interview data or client components are not yet loaded, show a loading message
+  if (!interview || !AgentWrapper || !DisplayTechIcons) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -39,6 +71,7 @@ const InterviewDetails = async ({ params }: { params: { id: string } }) => {
         </p>
       </div>
 
+      {/* Rendering the dynamically loaded AgentWrapper */}
       <AgentWrapper interview={interview} />
     </>
   );
