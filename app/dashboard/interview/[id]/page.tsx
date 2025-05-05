@@ -1,20 +1,21 @@
-// app/interview/[id]/page.tsx (Server Component)
+// app/dashboard/interview/[id]/page.tsx
+
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import AgentWrapper from "@/components/AgentWrapper"; // <-- NEW
-import DisplayTechIcons from "@/components/DisplayTechIcons";
-
-import {
-  getFeedbackByInterviewId,
-  getInterviewById,
-} from "@/lib/actions/general.action";
+import { getInterviewById } from "@/lib/actions/general.action";
 import { getRandomInterviewCover } from "@/lib/utils";
+
+// ⛔️ DO NOT import `AgentWrapper` or `DisplayTechIcons` here
 
 const InterviewDetails = async ({ params }: { params: { id: string } }) => {
   const id = params.id;
 
   const interview = await getInterviewById(id);
   if (!interview) redirect("/dashboard");
+
+  // ✅ Now safely import client components inside JSX
+  const AgentWrapper = (await import("@/components/AgentWrapper")).default;
+  const DisplayTechIcons = (await import("@/components/DisplayTechIcons")).default;
 
   return (
     <>
