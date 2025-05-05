@@ -80,7 +80,7 @@ const InterviewCard = ({
                 width={22}
                 height={22}
                 alt="calendar"
-                className="filter invert-0"
+                className="filter invert-0 brightness-0 contrast-100"
               />
               <p>{formattedDate}</p>
             </div>
@@ -91,7 +91,7 @@ const InterviewCard = ({
                 width={22}
                 height={22}
                 alt="star"
-                className="filter invert-0"
+                className="filter invert-0 brightness-0 contrast-100"
               />
               <p>{feedback?.totalScore ?? "---"}/100</p>
             </div>
