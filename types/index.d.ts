@@ -57,7 +57,7 @@ interface Feedback {
     questions?: string[];
   }
   
-  interface RouteParams {
+  interface AsyncRouteParams {
     params: Promise<Record<string, string>>;
     searchParams: Promise<Record<string, string>>;
   }
