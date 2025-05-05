@@ -1,16 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+import { stackServerApp } from './stack';
 
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get('stack-session')?.value;
+export async function middleware(req: NextRequest) {
+    const user = await stackServerApp.getUser();
 
-  if (!token) {
-    // Redirect to sign-in if the Stack Auth session cookie is missing
-    return NextResponse.redirect(new URL('/handler/sign-in', request.url));
-  }
+    // Allow access to the home route
+    
 
-  return NextResponse.next();
+    // Redirect unauthenticated users to the home page
+    if (!user) {
+        return NextResponse.redirect(new URL('/handler/sign-in', req.url));
+    }
+
+    return NextResponse.next();
 }
 
+// Apply middleware to all routes except for static assets and the home route
 export const config = {
-  matcher: '/dashboard/:path*',
+    matcher: '/dashboard/:path*',
 };
