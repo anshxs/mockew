@@ -3,8 +3,8 @@ import { getInterviewById } from "@/lib/actions/general.action";
 import { redirect } from "next/navigation";
 import FeedbackClient from "./FeedbackClient";
 
-export default async function FeedbackPage({ params }: { params: { id: string } }) {
-    const { id } = params;
+const Feedback = async ({ params }: RouteParams) => {
+    const { id } = await params;
   
     const interview = await getInterviewById(id);
     if (!interview) redirect("/dashboard");
@@ -12,3 +12,4 @@ export default async function FeedbackPage({ params }: { params: { id: string } 
     return <FeedbackClient interviewId={id} interview={interview} />;
   }
   
+  export default Feedback;
