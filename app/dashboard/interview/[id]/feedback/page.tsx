@@ -7,9 +7,9 @@ import FeedbackClient from "./FeedbackClient";
 export default async function Feedback({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   const interview = await getInterviewById(id);
   if (!interview) redirect("/dashboard");
