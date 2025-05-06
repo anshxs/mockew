@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import FeedbackClient from "./FeedbackClient";
 
 const Feedback = async ({ params }: RouteParams) => {
-    const { id } = await params;
+    const { id } = params;
   
     const interview = await getInterviewById(id);
     if (!interview) redirect("/dashboard");
