@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import { GridPatternDashed } from "@/components/GridPatternDashed"; // adjust the path as neede
+import { GridPatternDashed } from "@/components/GridPatternDashed"; // adjust the path as needed
 import { Pointer } from "@/components/magicui/pointer";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,10 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <StackProvider app={stackServerApp}>
           <StackTheme>
-          <Pointer className="fill-blue-500" />
+            <Pointer className="fill-blue-500" />
             <div className="relative min-h-screen overflow-hidden">
               {/* Background Pattern */}
               <div className="absolute inset-0 -z-10">
