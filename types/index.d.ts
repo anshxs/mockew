@@ -57,10 +57,7 @@ interface Feedback {
     questions?: string[];
   }
   
-  interface RouteParams {
-  params: Record<string, string>;
-  searchParams: Record<string, string>;
-  }
+  
   
   interface GetFeedbackByInterviewIdParams {
     interviewId: string;
