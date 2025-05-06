@@ -54,7 +54,7 @@ export default function Home() {
       />
     </div>
     <h1 
-      className="text-5xl font-extrabold"><AnimatedGradientText
+      className="text-5xl font-extrabold text-center"><AnimatedGradientText
       speed={2}
     >
       MOCKEW AI
