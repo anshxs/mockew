@@ -1,19 +1,22 @@
-// app/dashboard/interview/[id]/page.tsx
-
+import { Metadata } from "next";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getInterviewById } from "@/lib/actions/general.action";
 import { getRandomInterviewCover } from "@/lib/utils";
 
-// ⛔️ DO NOT import `AgentWrapper` or `DisplayTechIcons` here
+// Define props interface
+interface InterviewDetailsProps {
+  params: {
+    id: string;
+  };
+}
 
-const InterviewDetails = async ({ params }: { params: { id: string } }) => {
+const InterviewDetails = async ({ params }: InterviewDetailsProps) => {
   const id = params.id;
 
   const interview = await getInterviewById(id);
   if (!interview) redirect("/dashboard");
 
-  // ✅ Now safely import client components inside JSX
   const AgentWrapper = (await import("@/components/AgentWrapper")).default;
   const DisplayTechIcons = (await import("@/components/DisplayTechIcons")).default;
 
@@ -29,14 +32,14 @@ const InterviewDetails = async ({ params }: { params: { id: string } }) => {
               height={40}
               className="rounded-full object-cover size-[40px]"
             />
-            <h3 className="capitalize text-2xl font-semibold">{interview.role} Interview</h3>
+            <h3 className="capitalize text-2xl font-semibold">
+              {interview.role} Interview
+            </h3>
           </div>
           <DisplayTechIcons techStack={interview.techstack} />
         </div>
 
-        <p className="bg-secondary px-4 py-2 rounded-lg h-fit">
-          {interview.type}
-        </p>
+        <p className="bg-secondary px-4 py-2 rounded-lg h-fit">{interview.type}</p>
       </div>
 
       <AgentWrapper interview={interview} />
