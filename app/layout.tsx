@@ -3,8 +3,8 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import "./globals.css";
 import Header from "@/components/Header";
-import { GridPatternDashed } from "@/components/GridPatternDashed"; // adjust the path as needed
-import { Pointer } from "@/components/magicui/pointer";
+import { GridPatternDashed } from "@/components/GridPatternDashed";
+import PointerWrapper from "@/components/PointerWrapper"; // path depends on your file structure
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="antialiased">
         <StackProvider app={stackServerApp}>
           <StackTheme>
-            <Pointer className="fill-blue-500" />
+            <PointerWrapper className="fill-blue-500" />
             <div className="relative min-h-screen overflow-hidden">
               {/* Background Pattern */}
               <div className="absolute inset-0 -z-10">
