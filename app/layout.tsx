@@ -3,6 +3,9 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import { GridPatternDashed } from "@/components/GridPatternDashed"; // adjust the path as neede
+import { Pointer } from "@/components/magicui/pointer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,16 +24,30 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><StackProvider app={stackServerApp}><StackTheme>
-        {children}
-      </StackTheme></StackProvider></body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <StackProvider app={stackServerApp}>
+          <StackTheme>
+          <Pointer className="fill-blue-500" />
+            <div className="relative min-h-screen overflow-hidden">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 -z-10">
+                <GridPatternDashed />
+              </div>
+
+              {/* Foreground Content */}
+              <Header />
+              <main className="pt-12 md:pt-20 px-8 md:px-16">
+                {children}
+              </main>
+            </div>
+          </StackTheme>
+        </StackProvider>
+      </body>
     </html>
   );
 }

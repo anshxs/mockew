@@ -72,21 +72,29 @@ const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
   useEffect(() => {
     const fetchFeedbacks = async () => {
       if (!user?.id) return;
-      const allFeedbacks: Record<string, any> = {};
-
-      for (const interview of dummyInterviews) {
-        const feedback = await getFeedbackByInterviewId({
-          interviewId: interview.id,
-          userId: user.id,
-        });
-        allFeedbacks[interview.id] = feedback;
+  
+      const { data: feedbackData, error } = await supabase
+        .from("feedbacks")
+        .select("*")
+        .eq("user_id", user.id);
+  
+      if (error) {
+        console.error("Error fetching feedbacks:", error);
+        return;
       }
-
-      setFeedbacks(allFeedbacks);
+  
+      // Transform the feedback array into an object with interviewId as key
+      const feedbackMap: Record<string, any> = {};
+      feedbackData?.forEach((feedback) => {
+        feedbackMap[feedback.interview_id] = feedback;
+      });
+  
+      setFeedbacks(feedbackMap);
     };
-
+  
     fetchFeedbacks();
   }, [user]);
+  
 
   const goToIntGen = () => {
     router.push("/dashboard/interview");
