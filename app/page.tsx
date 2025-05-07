@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import Link from "next/link";
+import { DockDemo } from "@/components/DockDemo";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -89,6 +90,7 @@ export default function Home() {
         Free
       </LineShadowText>
     </h1>
+        <DockDemo/>
       
     
     
