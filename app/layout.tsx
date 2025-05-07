@@ -30,7 +30,7 @@ export default function RootLayout({
 
               {/* Foreground Content */}
               <Header />
-              <main className="pt-12 md:pt-20 px-8 md:px-16">
+              <main className="pt-12 md:pt-20 ">
                 {children}
               </main>
             </div>
