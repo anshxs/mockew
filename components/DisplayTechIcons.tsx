@@ -61,7 +61,7 @@ const DisplayTechIcons = ({ techStack }: TechIconProps) => {
             index >= 1 && "-ml-3"
           )}
         >
-          <span className="absolute bottom-full mb-1 hidden group-hover:flex px-2 py-1 text-xs text-white bg-black rounded-md shadow-md">{tech}</span>
+          <span className="absolute bottom-full mb-1 group-hover:flex px-2 py-1 text-xs text-black rounded-md shadow-md">{tech}</span>
 
           <Image
             src={url}
