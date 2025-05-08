@@ -29,7 +29,7 @@ export default function Home() {
     router.push("/dashboard");
   };
 
-  export const faqs = [
+  const faqs = [
   {
     question: "What makes Sensai unique as a career development tool?",
     answer:
