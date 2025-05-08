@@ -24,7 +24,7 @@ export default function Header() {
               <Menu />
             </Button>
           </DrawerTrigger>
-          <DrawerContent side="right" className="p-4 flex flex-col h-full justify-between">
+          <DrawerContent className="p-4 flex flex-col h-full justify-between">
             <div>
               <DrawerHeader>
                 <DrawerTitle>Menu</DrawerTitle>
