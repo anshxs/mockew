@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { SparklesText } from "@/components/magicui/sparkles-text";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,7 +14,6 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { PanelRight } from "lucide-react";
-
 // Dynamically import UserButton to avoid SSR issues
 const UserButton = dynamic(() => import("@stackframe/stack").then(mod => mod.UserButton), {
   ssr: false,
