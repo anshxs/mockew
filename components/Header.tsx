@@ -31,7 +31,7 @@ export default function Header() {
                 </Button>
               </DrawerTrigger>
               <DrawerContent
-                side="right"
+                
                 className="bg-gray-200 p-4 flex flex-col justify-between h-full w-[300px]"
               >
                 <div>
