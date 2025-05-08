@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { UserButton } from "@stackframe/stack";
-import { useUser } from "@stackframe/stack";
+import dynamic from "next/dynamic";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,19 +15,35 @@ import {
 import Link from "next/link";
 import { PanelRight } from "lucide-react";
 
+// Dynamically import UserButton to avoid SSR issues
+const UserButton = dynamic(() => import("@stackframe/stack").then(mod => mod.UserButton), {
+  ssr: false,
+});
+
+// Dynamically import useUser inside a safe hook
+let useUser: any;
+if (typeof window !== "undefined") {
+  useUser = require("@stackframe/stack").useUser;
+}
+
 export default function Header() {
-  const user = useUser();
-  const [isMounted, setIsMounted] = useState(false);
+  const [userInfo, setUserInfo] = useState<{ displayName?: string; primaryEmail?: string } | null>(null);
 
   useEffect(() => {
-    setIsMounted(true);
+    if (useUser) {
+      const user = useUser();
+      setUserInfo({
+        displayName: user?.displayName,
+        primaryEmail: user?.primaryEmail,
+      });
+    }
   }, []);
 
   return (
     <header className="w-full fixed top-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-200 shadow-sm px-6 py-3 flex items-center justify-between">
       <SparklesText className="text-xl font-extrabold">MOCKEW AI</SparklesText>
       <div className="flex items-center gap-2">
-        {isMounted && <UserButton />}
+        <UserButton />
 
         <Sheet>
           <SheetTrigger asChild>
@@ -72,16 +87,16 @@ export default function Header() {
               <Link href="/handler/account-settings">
                 <div className="bg-secondary rounded-xl border-2 flex items-center p-4 space-x-4">
                   <div className="flex items-center space-x-4">
-                    {isMounted && <UserButton />}
+                    <UserButton />
                     <div className="w-px bg-gray-300 h-10" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-lg font-semibold">
-                      {user?.displayName ?? "Sign In"}
+                      {userInfo?.displayName ?? "Sign In"}
                     </span>
-                    {user?.displayName && user.primaryEmail && (
+                    {userInfo?.displayName && userInfo.primaryEmail && (
                       <span className="text-sm text-muted-foreground">
-                        {user.primaryEmail}
+                        {userInfo.primaryEmail}
                       </span>
                     )}
                   </div>
@@ -95,4 +110,4 @@ export default function Header() {
       </div>
     </header>
   );
-        }
+}
