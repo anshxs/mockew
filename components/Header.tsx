@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { Button } from "@/components/ui/button";
@@ -20,25 +19,7 @@ const UserButton = dynamic(() => import("@stackframe/stack").then(mod => mod.Use
   ssr: false,
 });
 
-// Dynamically import useUser inside a safe hook
-let useUser: any;
-if (typeof window !== "undefined") {
-  useUser = require("@stackframe/stack").useUser;
-}
-
 export default function Header() {
-  const [userInfo, setUserInfo] = useState<{ displayName?: string; primaryEmail?: string } | null>(null);
-
-  useEffect(() => {
-    if (useUser) {
-      const user = useUser();
-      setUserInfo({
-        displayName: user?.displayName,
-        primaryEmail: user?.primaryEmail,
-      });
-    }
-  }, []);
-
   return (
     <header className="w-full fixed top-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-200 shadow-sm px-6 py-3 flex items-center justify-between">
       <SparklesText className="text-xl font-extrabold">MOCKEW AI</SparklesText>
@@ -83,7 +64,6 @@ export default function Header() {
                   Refund Policy
                 </Button>
               </Link>
-
               <Link href="/handler/account-settings">
                 <div className="bg-secondary rounded-xl border-2 flex items-center p-4 space-x-4">
                   <div className="flex items-center space-x-4">
@@ -91,14 +71,8 @@ export default function Header() {
                     <div className="w-px bg-gray-300 h-10" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-lg font-semibold">
-                      {userInfo?.displayName ?? "Sign In"}
-                    </span>
-                    {userInfo?.displayName && userInfo.primaryEmail && (
-                      <span className="text-sm text-muted-foreground">
-                        {userInfo.primaryEmail}
-                      </span>
-                    )}
+                    <span className="text-lg font-semibold">Account</span>
+                    <span className="text-sm text-muted-foreground">Manage your settings</span>
                   </div>
                 </div>
               </Link>
