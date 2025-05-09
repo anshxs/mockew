@@ -25,7 +25,10 @@ export default function RootLayout({
             <div className="relative min-h-screen overflow-hidden">
               {/* Background Pattern */}
               <div className="absolute inset-0 -z-10">
-                <GridPatternDashed />
+                <div
+  className="absolute right-0 top-0 h-[300px] w-[300px] animate-pulse rounded-full bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-200 opacity-70 blur-3xl"
+  aria-hidden="true"
+/>
               </div>
 
               {/* Foreground Content */}
