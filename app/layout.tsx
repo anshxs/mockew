@@ -5,6 +5,13 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { GridPatternDashed } from "@/components/GridPatternDashed";
 import PointerWrapper from "@/components/PointerWrapper"; // path depends on your file structure
+import { Jost } from 'next/font/google';
+
+export const myFont = Jost({
+  subsets: ['latin'],
+  weight: ['400','500','700'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,18 +24,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={myFont.className}>
       <body className="antialiased">
         <StackProvider app={stackServerApp}>
           <StackTheme>
             <PointerWrapper className="fill-blue-500" />
             <div className="relative min-h-screen overflow-hidden">
               {/* Background Pattern */}
-              <div className="absolute inset-0 -z-10">
+              <div className="fixed inset-0 -z-10">
                 <div
-  className="absolute right-0 top-0 h-[300px] w-[300px] animate-pulse rounded-full bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-200 opacity-70 blur-3xl"
-  aria-hidden="true"
-/>
+                  className="absolute top-1/2 left-1/2 h-[300px] w-[300px] animate-pulse rounded-full bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-200 opacity-70 blur-3xl"
+                  aria-hidden="true"
+                />
               </div>
 
               {/* Foreground Content */}

@@ -21,10 +21,11 @@ const UserButton = dynamic(() => import("@stackframe/stack").then(mod => mod.Use
 
 export default function Header() {
   return (
-    <header className="w-full fixed top-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-200 shadow-sm px-6 py-3 flex items-center justify-between">
+    <header className="w-full fixed top-0 z-50 backdrop-blur-sm bg-white/70 px-6 py-2 flex items-center justify-between">
       <SparklesText className="text-xl font-extrabold">MOCKEW AI</SparklesText>
 
       <div className="flex items-center gap-2">
+        
         <UserButton />
 
         <Sheet>
@@ -56,7 +57,7 @@ export default function Header() {
                     Link Dance
                   </Button>
                 </Link>
-                <Link href="/reviewer">
+                <Link href="/dashboard/reviewer">
                   <Button variant="ghost" className="w-full justify-start bg-secondary">
                     Code Reviewer
                   </Button>
@@ -85,10 +86,15 @@ export default function Header() {
                   Refund Policy
                 </Button>
               </Link>
+              <Link href="/dashboard/pricing">
+                <Button variant="ghost" className="w-full justify-start bg-secondary mb-2">
+                  Pricing
+                </Button>
+              </Link>
 
               <Link href="/handler/account-settings" className="w-full">
-                <div className="bg-secondary rounded-xl border-2 flex items-center p-4 space-x-4 w-full">
-                  <div className="flex items-center space-x-4">
+                <div className="bg-secondary rounded-xl border-2 flex items-center py-2 px-4 w-full">
+                  <div className="flex items-center px-4">
                     <UserButton />
                     <div className="w-px bg-gray-300 h-10" />
                   </div>
