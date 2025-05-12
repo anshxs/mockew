@@ -6,8 +6,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-import { ReviewButton } from "@/components/review-button";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { ReviewButton } from "./review-button";
 
 interface FileContentProps {
   selectedFile: string;
