@@ -6,22 +6,20 @@ const execAsync = promisify(exec);
 
 const getAllFilesFromGit = async () => {
   try {
-    // List all files, excluding .git, .next, and node_modules
-    const { stdout } = await execAsync(
-      'find . -type f -not -path "./.git/*" -not -path "./.next/*" -not -path "*/node_modules/*"'
-    );
+    // Get all Git-tracked files
+    const { stdout } = await execAsync("git ls-files");
 
-    // Process the output to get file names
     const files = stdout
       .split("\n")
-      .filter((file) => file.trim() !== "")
-      .map((file) => file.trim().replace("./", "")); // Remove leading ./
+      .filter((file) => file.trim() !== "");
 
     return { files };
   } catch (error) {
-    console.error("Error listing files:", error);
+    console.error("Error listing Git files:", error);
+    return { files: [] };
   }
 };
+
 
 async function getSelectedFile(filePath: string) {
   try {

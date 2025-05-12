@@ -110,9 +110,10 @@ const InterviewCard = ({
           <Button className="w-fit bg-black text-white hover:bg-black rounded-xl font-bold px-5 cursor-pointer min-h-10">
             <Link
               href={
-                feedback
-                  ? `/dashboard/interview/${interviewId}/feedback`
-                  : `/dashboard/interview/${interviewId}`
+                {pathname: feedback
+                  ? `/dashboard/interview/[id]/feedback`
+                  : `/dashboard/interview/[id]`,
+                query: { id: interviewId },}
               }
             >
               {feedback ? "Check Feedback" : "View Interview"}

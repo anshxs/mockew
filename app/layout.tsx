@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import "./globals.css";
-import Header from "@/components/Header";
-import { GridPatternDashed } from "@/components/GridPatternDashed";
-import PointerWrapper from "@/components/PointerWrapper"; // path depends on your file structure
+import Header from "@/components/Header"; // path depends on your file structure
 import { Jost } from 'next/font/google';
 
 export const myFont = Jost({
@@ -28,7 +26,6 @@ export default function RootLayout({
       <body className="antialiased">
         <StackProvider app={stackServerApp}>
           <StackTheme>
-            <PointerWrapper className="fill-blue-500" />
             <div className="relative min-h-screen overflow-hidden">
               {/* Background Pattern */}
               <div className="fixed inset-0 -z-10">
