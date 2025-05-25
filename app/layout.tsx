@@ -4,6 +4,7 @@ import { stackServerApp } from "../stack";
 import "./globals.css";
 import Header from "@/components/Header"; // path depends on your file structure
 import { Jost } from 'next/font/google';
+import { Toaster } from "@/components/ui/toaster";
 
 export const myFont = Jost({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
               <Header />
               <main className="pt-12 md:pt-20 ">
                 {children}
+                <Toaster />
               </main>
             </div>
           </StackTheme>

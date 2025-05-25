@@ -41,59 +41,61 @@ export default function Header() {
                 <SheetTitle className="text-left text-lg">Menu</SheetTitle>
               </SheetHeader>
 
+              <div className="flex flex-col justify-between">
               <div className="mt-4 flex flex-col gap-2">
                 <Link href="/dashboard">
-                  <Button variant="ghost" className="w-full justify-start bg-secondary">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Dashboard
                   </Button>
                 </Link>
                 <Link href="/resume-build">
-                  <Button variant="ghost" className="w-full justify-start bg-secondary">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Resume Builder
                   </Button>
                 </Link>
-                <Link href="/link-gen">
-                  <Button variant="ghost" className="w-full justify-start bg-secondary">
+                <Link href="/dashboard/link-gen">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Link Dance
                   </Button>
                 </Link>
                 <Link href="/dashboard/reviewer">
-                  <Button variant="ghost" className="w-full justify-start bg-secondary">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Code Reviewer
                   </Button>
                 </Link>
                 <Link href="/cover-gen">
-                  <Button variant="ghost" className="w-full justify-start bg-secondary">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Cover Page/Letter
                   </Button>
                 </Link>
               </div>
             </div>
 
-            <SheetFooter className="flex flex-col items-start gap-2 mt-6">
+              <div className="grid grid-cols-2 mt-10 gap-2">
               <Link href="/terms-and-conditions">
-                <Button variant="ghost" className="w-full justify-start bg-secondary">
+                <Button variant="ghost" className="w-full overflow-hidden whitespace-nowrap truncate border-2 h-14 justify-start bg-secondary">
                   Terms and Conditions
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button variant="ghost" className="w-full justify-start bg-secondary">
+                <Button variant="ghost" className="w-full h-14 border-2 justify-start bg-secondary">
                   Contact Us
                 </Button>
               </Link>
               <Link href="/refund-policy">
-                <Button variant="ghost" className="w-full justify-start bg-secondary mb-2">
+                <Button variant="ghost" className="w-full h-14 border-2 justify-start bg-secondary">
                   Refund Policy
                 </Button>
               </Link>
               <Link href="/dashboard/pricing">
-                <Button variant="ghost" className="w-full justify-start bg-secondary mb-2">
+                <Button variant="ghost" className="w-full h-14 border-2 justify-start bg-secondary">
                   Pricing
                 </Button>
               </Link>
+              </div>
 
               <Link href="/handler/account-settings" className="w-full">
-                <div className="bg-secondary rounded-xl border-2 flex items-center py-2 px-4 w-full">
+                <div className="bg-secondary rounded-xl border-2 mt-4 flex items-center py-2 px-4 w-full">
                   <div className="flex items-center px-4">
                     <UserButton />
                     <div className="w-px bg-gray-300 h-10" />
@@ -104,7 +106,8 @@ export default function Header() {
                   </div>
                 </div>
               </Link>
-            </SheetFooter>
+              
+              </div>
           </SheetContent>
         </Sheet>
       </div>

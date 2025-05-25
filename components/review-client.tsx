@@ -19,11 +19,14 @@ export function ReviewClient({
   files,
   selectedFile,
   file: currentFile,
+  onSelectFile,
 }: {
   files: string[];
   selectedFile: { content?: string; error?: string };
   file: string;
+  onSelectFile: (fileName: string) => void;
 }) {
+
   const [review, setReview] = useState<string>("");
   const [highlightedLines, setHighlightedLines] = useState<number[]>([]);
   const [lineComments, setLineComments] = useState<Record<number, string>>({});
@@ -112,29 +115,25 @@ export function ReviewClient({
   };
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+    <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6'>
       <Card className='border-2 border-pink-200'>
         <CardHeader>
           <CardTitle>ᛋ Project Files</CardTitle>
-          <CardDescription>
-            Select a file to review. I&apos;ll give you a detailed analysis of
-            the code, including security vulnerabilities, code style, and
-            performance optimizations.
-          </CardDescription>
         </CardHeader>
         <CardContent className='flex-1'>
-          <div className='h-[650px]'>
-            <ScrollArea className='h-full'>
-              <div className='space-y-2'>
+            <ScrollArea type="always" className="h-[70vh] w-full">
+              <div>
                 {files.length === 0 ? (
                   <p className='text-muted-foreground'>Loading files...</p>
                 ) : (
                   files.map((file) => (
-                    <Link
-                      href={`?path=${file}`}
-                      key={file}
-                      className={`p-4 rounded-lg cursor-pointer transition-colors`}
-                    >
+                    <div
+  key={file}
+  onClick={() => onSelectFile(file)}
+  className="px-3 py-2 rounded-lg cursor-pointer transition-colors hover:bg-pink-50"
+>
+
+
                       <div className='flex items-center justify-between'>
                         <span
                           className={cn(
@@ -150,12 +149,11 @@ export function ReviewClient({
                           </Badge>
                         )}
                       </div>
-                    </Link>
+                    </div>
                   ))
                 )}
               </div>
             </ScrollArea>
-          </div>
         </CardContent>
       </Card>
 

@@ -16,9 +16,9 @@ type InterviewCardProps = {
   techstack: string[];
   createdAt: string;
   feedback: {
-    totalScore: number;
-    finalAssessment: string;
-    createdAt: string;
+    total_score: number;
+    final_assessment: string;
+    created_at: string;
   } | null;
 };
 
@@ -41,11 +41,11 @@ const InterviewCard = ({
     }[normalizedType] || "bg-gray-600";
 
   const formattedDate = dayjs(
-    feedback?.createdAt || createdAt || Date.now()
+    feedback?.created_at || createdAt || Date.now()
   ).format("MMM D, YYYY");
 
   return (
-    <div className="p-0.5 rounded-2xl w-[360px] max-sm:w-full min-h-96">
+    <div className="rounded-2xl w-[360px] max-sm:w-full min-h-96 border-2">
       <div className="bg-secondary rounded-2xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between">
         <div>
           {/* Type Badge */}
@@ -82,7 +82,9 @@ const InterviewCard = ({
                 alt="calendar"
                 className="filter invert-0 brightness-0 contrast-100"
               />
-              <p>{formattedDate}</p>
+              <p>{feedback?.created_at
+                                ? dayjs(feedback.created_at).format("MMM D, YYYY h:mm A")
+                                : formattedDate}</p>
             </div>
 
             <div className="flex flex-row gap-2 items-center">
@@ -93,13 +95,13 @@ const InterviewCard = ({
                 alt="star"
                 className="filter invert-0 brightness-0 contrast-100"
               />
-              <p>{feedback?.totalScore ?? "---"}/100</p>
+              <p>{feedback?.total_score ?? "---"}/100</p>
             </div>
           </div>
 
           {/* Feedback or Placeholder Text */}
           <p className="line-clamp-2 mt-5">
-            {feedback?.finalAssessment ||
+            {feedback?.final_assessment ||
               "You haven't taken this interview yet. Take it now to improve your skills."}
           </p>
         </div>
@@ -108,17 +110,17 @@ const InterviewCard = ({
           <DisplayTechIcons techStack={techstack} />
 
           <Button className="w-fit bg-black text-white hover:bg-black rounded-xl font-bold px-5 cursor-pointer min-h-10">
-            <Link
-              href={
-                {pathname: feedback
-                  ? `/dashboard/interview/[id]/feedback`
-                  : `/dashboard/interview/[id]`,
-                query: { id: interviewId },}
-              }
-            >
-              {feedback ? "Check Feedback" : "View Interview"}
-            </Link>
-          </Button>
+  <Link
+    href={
+      feedback
+        ? `/dashboard/interview/${interviewId}/feedback`
+        : `/dashboard/interview/${interviewId}`
+    }
+  >
+    {feedback ? "Check Feedback" : "View Interview"}
+  </Link>
+</Button>
+
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MarkdownRenderer } from "./markdown-renderer";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { ReviewButton } from "./review-button";
 
@@ -96,8 +97,7 @@ export function FileContent({
           </div>
         </CardHeader>
         <CardContent className='flex-1'>
-          <div className='h-[650px]'>
-            <ScrollArea className='h-full'>
+            <ScrollArea type="always" className="h-[70vh] w-full">
               {selectedFile ? (
                 <div className='relative h-full'>
                   <div className='rounded-md overflow-hidden h-full'>
@@ -123,7 +123,6 @@ export function FileContent({
                 </div>
               )}
             </ScrollArea>
-          </div>
         </CardContent>
       </Card>
 
@@ -133,8 +132,8 @@ export function FileContent({
             <DialogTitle>Line {selectedLine}</DialogTitle>
           </DialogHeader>
           <div className='prose dark:prose-invert max-w-none text-sm'>
-            <p className='whitespace-pre-wrap'>
-              {selectedLine
+            <MarkdownRenderer content={
+              selectedLine
                 ? (() => {
                     console.log("Dialog - Selected Line:", selectedLine);
                     console.log("Dialog - Line Comments:", lineComments);
@@ -144,8 +143,8 @@ export function FileContent({
                     );
                     return lineComments[selectedLine];
                   })()
-                : ""}
-            </p>
+                : ""
+                } />
           </div>
         </DialogContent>
       </Dialog>

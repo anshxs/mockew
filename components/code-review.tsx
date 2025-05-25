@@ -5,22 +5,21 @@ import { ScrollArea } from "./ui/scroll-area";
 export function CodeReview({ review }: { review: string }) {
   return (
     <Card className="border-2 border-green-200">
-      <CardHeader>
-        <CardTitle>💖 Code Review</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <div className="h-[700px]">
-          <ScrollArea className="h-full">
-            {review ? (
-              <MarkdownRenderer content={review} />
-            ) : (
-              <div className="h-full flex items-center justify-center text-muted-foreground">
-                <p>Click &quot;Review File&quot; to analyze this file</p>
-              </div>
-            )}
-          </ScrollArea>
+  <CardHeader>
+    <CardTitle>💖 Code Review</CardTitle>
+  </CardHeader>
+  <CardContent className="flex-1">
+    <ScrollArea type="always" className="h-[70vh] w-full">
+      {review ? (
+        <MarkdownRenderer content={review} />
+      ) : (
+        <div className="h-full flex items-center justify-center text-muted-foreground">
+          <p>Click &quot;Review File&quot; to analyze this file</p>
         </div>
-      </CardContent>
-    </Card>
+      )}
+    </ScrollArea>
+  </CardContent>
+</Card>
+
   );
 }

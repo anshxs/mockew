@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@stackframe/stack";
 import dayjs from "dayjs";
+import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 
 interface FeedbackClientProps {
@@ -32,7 +34,7 @@ const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
         fetchFeedback();
     }, [user, interviewId]);
 
-    if (loading) return <p>Loading feedback...</p>;
+    if (loading) return <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />;
 
     if (!feedback) return <p>No feedback available for this interview.</p>;
 
@@ -47,7 +49,11 @@ const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
             <div className="flex flex-row justify-center">
                 <h1 className="text-4xl font-semibold">
                     Feedback on the Interview -{" "}
-                    <span className="capitalize">{interview.role}</span> Interview
+                    <AnimatedGradientText
+                                        speed={2}
+                                    >
+                                        {interview.role} Interview
+                                    </AnimatedGradientText>
                 </h1>
             </div>
 
@@ -132,11 +138,18 @@ const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
                 </Button>
 
                 <Button className="w-fit !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10 flex-1">
-                    <Link href={`/dashboard/interview/${interviewId}`} className="flex w-full justify-center">
-                        <p className="text-sm font-semibold text-white text-center">
-                            Retake Interview
-                        </p>
-                    </Link>
+                <Link
+  href={{
+    pathname: "/dashboard/interview/[id]",
+    query: { id: interviewId },
+  }}
+  className="flex w-full justify-center"
+>
+  <p className="text-sm font-semibold text-white text-center">
+    Retake Interview
+  </p>
+</Link>
+
                 </Button>
             </div>
         </section>

@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useUser } from "@stackframe/stack";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/InterviewCard";
 import { dummyInterviews } from "@/constants";
+import { Loader2 } from "lucide-react";
+
 import supabase from "@/lib/supabase";
 import {
   getFeedbackByInterviewId,
@@ -112,7 +114,7 @@ const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
         </div>
         <div className="flex flex-wrap gap-4">
           {loading ? (
-            <p>Loading...</p>
+            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           ) : hasPastInterviews ? (
             userInterviews.map((interview) => (
               <InterviewCard
@@ -133,7 +135,7 @@ const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
         <h2 className="text-2xl font-semibold">Take Interviews</h2>
         <div className="flex flex-wrap gap-4">
           {loading ? (
-            <p>Loading...</p>
+            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           ) : hasUpcomingInterviews ? (
             latestInterviews.map((interview) => (
               <InterviewCard

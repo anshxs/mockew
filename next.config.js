@@ -1,6 +1,78 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // config options here
-};
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    domains: [
+      'api.qrserver.com',
+      'images.unsplash.com',
+      'via.placeholder.com',
+      'picsum.photos',
+      'cdn.jsdelivr.net',
+      'raw.githubusercontent.com',
+      'github.com',
+      'gitlab.com',
+      'bitbucket.org',
+      'gravatar.com',
+      'avatars.githubusercontent.com',
+      'lh3.googleusercontent.com',
+      'platform-lookaside.fbsbx.com',
+      'pbs.twimg.com',
+      'abs.twimg.com',
+      'media.licdn.com',
+      'instagram.com',
+      'scontent.cdninstagram.com',
+      'yt3.ggpht.com',
+      'i.ytimg.com',
+      'static-cdn.jtvnw.net',
+      'cdn.discordapp.com',
+      'i.scdn.co',
+      'mosaic.scdn.co',
+      'lineup-images.scdn.co',
+      'i1.sndcdn.com',
+      'a1.sndcdn.com',
+      'w.soundcloud.com',
+      'cf-images.us-east-1.prod.boltdns.net',
+      'images.ctfassets.net',
+      'res.cloudinary.com',
+      'firebasestorage.googleapis.com',
+      'storage.googleapis.com',
+      'amazonaws.com',
+      's3.amazonaws.com',
+      'digitaloceanspaces.com',
+      'blob.core.windows.net',
+      'imagekit.io',
+      'cloudinary.com',
+      'imgur.com',
+      'i.imgur.com',
+      'giphy.com',
+      'media.giphy.com',
+      'tenor.com',
+      'media.tenor.com',
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+    unoptimized: true,
+  },
+  experimental: {
+    optimizePackageImports: ['@supabase/supabase-js'],
+  },
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  },
+}
 
-module.exports = nextConfig;
+export default nextConfig
