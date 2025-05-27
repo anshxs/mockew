@@ -116,7 +116,7 @@ export function ReviewClient({
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6'>
-      <Card className='border-2 border-pink-200'>
+      <Card className='border-2 rounded-[30px]'>
         <CardHeader>
           <CardTitle>ᛋ Project Files</CardTitle>
         </CardHeader>

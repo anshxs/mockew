@@ -2,20 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@supabase/supabase-js"
+import { supabase } from "@/lib/supabase"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { Plus, Edit, ExternalLink, Trash2 } from "lucide-react"
 import Image from "next/image"
 import { useUser } from "@stackframe/stack"
-
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://rjvibgsaqswwxqnpywpf.supabase.co",
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqdmliZ3NhcXN3d3hxbnB5d3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxOTU4OTQsImV4cCI6MjA2MTc3MTg5NH0.D-yvGTOanVdH6JrfAcgXkKjQ4d_ogmLXNI_q1BZZI-s",
-)
 
 interface LinkData {
   id?: string
@@ -101,21 +94,14 @@ export default function Dashboard() {
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Linktree Clone Dashboard</h1>
-
-        {!user ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">Please sign in to manage your links.</p>
-          </div>
-        ) : (
+      <div className="flex flex-row justify-between mb-8">
+        <h1 className="text-3xl font-bold">LinkDance</h1>
           <div className="flex justify-end">
             <Button onClick={() => router.push(`/editor?userId=${userId}`)}>
               <Plus className="h-4 w-4 mr-2" />
               Create New Link
             </Button>
           </div>
-        )}
       </div>
 
       {loading ? (
@@ -137,7 +123,7 @@ export default function Dashboard() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {userLinks.map((link) => (
-            <Card key={link.id} className="hover:shadow-lg transition-shadow">
+            <Card key={link.id} className="rounded-[30px]">
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-3">
                   {link.profile_image && (
@@ -169,7 +155,7 @@ export default function Dashboard() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => router.push(`/editor?userId=${userId}&linkId=${link.id}`)}
+                      onClick={() => router.push(`/dashboard/link-gen/editor?userId=${userId}&linkId=${link.id}`)}
                       className="flex-1"
                     >
                       <Edit className="h-4 w-4 mr-1" />

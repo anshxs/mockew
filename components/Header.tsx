@@ -48,7 +48,7 @@ export default function Header() {
                     Dashboard
                   </Button>
                 </Link>
-                <Link href="/resume-build">
+                <Link href="/dashboard/resume-build">
                   <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Resume Builder
                   </Button>

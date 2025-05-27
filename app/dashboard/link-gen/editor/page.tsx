@@ -65,11 +65,11 @@ interface UserData {
 }
 
 // Initial data
-const getInitialData = (userId: string): UserData => ({
+const getInitialData = (userId: string, profileImage: string = ""): UserData => ({
   user_id: userId,
   name: "",
   bio: "",
-  profileImage: "",
+  profileImage: profileImage,
   backgroundColor: "#ffffff",
   textColor: "#000000",
   template: "card",
@@ -81,13 +81,14 @@ const getInitialData = (userId: string): UserData => ({
   customLinks: [],
 })
 
+
 export default function Editor() {
   const user = useUser()
   const searchParams = useSearchParams()
   const userId = user?.id || ""
   const linkId = searchParams.get("linkId")
   const [shortUrl, setShortUrl] = useState("");
-  const [userData, setUserData] = useState<UserData>(getInitialData(userId))
+  const [userData, setUserData] = useState<UserData>(getInitialData(userId, user?.profileImageUrl || ""))
   const [showPreview, setShowPreview] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showPublishDialog, setShowPublishDialog] = useState(false)

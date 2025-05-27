@@ -83,7 +83,7 @@ export function FileContent({
 
   return (
     <>
-      <Card className='border-2 border-blue-200 lg:col-span-2'>
+      <Card className='border-2 border-2 rounded-[30px] lg:col-span-2'>
         <CardHeader>
           <div className='flex items-center justify-between'>
             <CardTitle>🗂️ File Content</CardTitle>

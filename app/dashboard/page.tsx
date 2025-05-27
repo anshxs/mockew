@@ -5,15 +5,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/InterviewCard";
-import { dummyInterviews } from "@/constants";
 import { Loader2 } from "lucide-react";
-
 import supabase from "@/lib/supabase";
-import {
-  getFeedbackByInterviewId,
-  getInterviewsByUserId,
-  getLatestInterviews,
-} from "@/lib/actions/general.action";
 
 export default function Dashboard() {
   const user = useUser();
@@ -21,7 +14,7 @@ export default function Dashboard() {
 
   const [feedbacks, setFeedbacks] = useState<Record<string, any>>({});
   const [userInterviews, setUserInterviews] = useState<Interview[]>([]);
-const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
+  const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -58,10 +51,23 @@ const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
       if (!user?.id) return;
       setLoading(true);
 
-      const [interviews, latest] = await Promise.all([
-        getInterviewsByUserId(user.id),
-        getLatestInterviews({ userId: user.id }),
-      ]);
+      const { data: interviews, error: interviewError } = await supabase
+        .from("interviews")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      const { data: latest, error: latestError } = await supabase
+        .from("interviews")
+        .select("*")
+        .neq("user_id", user.id)
+        .eq("finalized", true)
+        .order("created_at", { ascending: false })
+        .limit(20);
+
+      if (interviewError || latestError) {
+        console.error("Error fetching interviews:", interviewError || latestError);
+      }
 
       setUserInterviews(interviews || []);
       setLatestInterviews(latest || []);
@@ -74,29 +80,27 @@ const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
   useEffect(() => {
     const fetchFeedbacks = async () => {
       if (!user?.id) return;
-  
+
       const { data: feedbackData, error } = await supabase
         .from("feedbacks")
         .select("*")
         .eq("user_id", user.id);
-  
+
       if (error) {
         console.error("Error fetching feedbacks:", error);
         return;
       }
-  
-      // Transform the feedback array into an object with interviewId as key
+
       const feedbackMap: Record<string, any> = {};
       feedbackData?.forEach((feedback) => {
         feedbackMap[feedback.interview_id] = feedback;
       });
-  
+
       setFeedbacks(feedbackMap);
     };
-  
+
     fetchFeedbacks();
   }, [user]);
-  
 
   const goToIntGen = () => {
     router.push("/dashboard/interview");

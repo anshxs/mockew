@@ -67,7 +67,7 @@ export default function Page() {
 
       <div className='space-y-6 mb-6'>
         <p className="mt-3">
-          Drop your Github repo URL, and let AI handle the code review. Instant insights, suggestions, and improvements - no manual effort needed. <span className="text-black rounded-md font-bold px-1" style={{backgroundColor: '#ADFF2F'}}>
+          Drop your Github repo URL, and let AI handle the code review. Instant insights, suggestions, and improvements - no manual effort needed. <span className="text-black rounded-md font-bold px-1" style={{backgroundColor: '#e5e7eb'}}>
           Click on highlited syntaxes for more details.
           </span>
         </p>

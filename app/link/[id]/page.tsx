@@ -26,6 +26,8 @@ export default function LinkPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
+  
+
   useEffect(() => {
     loadLinkData()
   }, [linkId])
@@ -90,9 +92,9 @@ export default function LinkPage() {
         backgroundColor: linkData.background_color,
         color: linkData.text_color,
       }}
-      className="min-h-screen p-6"
+      className="min-h-screen flex items-center justify-center"
     >
-      <div className="container mx-auto max-w-md">
+      <div className="container mx-auto max-w-md z-60">
         <PublicLinkPreview linkData={linkData} getSocialIcon={getSocialIcon} />
       </div>
     </main>
