@@ -9,6 +9,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+import { useRouter } from 'next/navigation'; // ✅ CORRECT for App Router
+
 
 interface FeedbackClientProps {
     interviewId: string;
@@ -20,6 +22,7 @@ interface FeedbackClientProps {
 const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
     const user = useUser();
     const [feedback, setFeedback] = useState<any>(null);
+    const router = useRouter();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -45,7 +48,7 @@ const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
 
 
     return (
-        <section className="flex flex-col gap-8 max-w-5xl mx-auto max-sm:px-4 text-lg leading-7 my-6">
+        <section className="flex flex-col gap-8 max-w-5xl mx-auto max-sm:px-4 bg-white text-lg leading-7 my-6">
             <div className="flex flex-row justify-center">
                 <h1 className="text-4xl font-semibold">
                     Feedback on the Interview -{" "}
@@ -129,26 +132,16 @@ const FeedbackClient = ({ interviewId, interview }: FeedbackClientProps) => {
 
 
             <div className="flex w-full justify-evenly gap-4 max-sm:flex-col max-sm:items-center">
-                <Button className="w-fit !bg-dark-200 !text-primary-200 hover:!bg-dark-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10 flex-1">
-                    <Link href="/dashboard" className="flex w-full justify-center">
+                <Button className="w-full" onClick={() => router.push(`/dashboard`)}>
                         <p className="text-sm font-semibold text-primary-200 text-center">
                             Back to dashboard
                         </p>
-                    </Link>
                 </Button>
 
-                <Button className="w-fit !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10 flex-1">
-                <Link
-  href={{
-    pathname: "/dashboard/interview/[id]",
-    query: { id: interviewId },
-  }}
-  className="flex w-full justify-center"
->
-  <p className="text-sm font-semibold text-white text-center">
-    Retake Interview
-  </p>
-</Link>
+                <Button
+  onClick={() => router.push(`/dashboard/interview/${interviewId}`)}>
+  <p className="text-sm font-semibold text-white text-center">Retake Interview</p>
+
 
                 </Button>
             </div>

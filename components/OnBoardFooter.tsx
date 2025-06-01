@@ -2,9 +2,11 @@ import React from 'react'
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import Link from "next/link";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import { Footer } from '@/components/Footer';
 
 export default function OnBoardFooter() {
   return (
+    <>
     <div className="size-full max-w-lg items-center justify-center overflow-hidden pt-14">
       <BoxReveal boxColor={"#5046e6"} duration={0.5}>
         <p className="text-[3.5rem] font-semibold">
@@ -39,6 +41,10 @@ export default function OnBoardFooter() {
           <InteractiveHoverButton >Get Started</InteractiveHoverButton>
         </Link>
       </BoxReveal>
+
+      
     </div>
+    
+    </>
   )
 }

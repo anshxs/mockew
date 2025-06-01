@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { supabase } from "@/lib/supabase"; // Adjust path as needed
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
 import { UserButton } from "@stackframe/stack";
+import Link from "next/link";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -25,6 +26,7 @@ interface SavedMessage {
 const Agent = ({
   userName,
   userId,
+  usermail,
   interviewId,
   feedbackId,
   type,
@@ -36,6 +38,28 @@ const Agent = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>("");
+  const [credits, setCredits] = useState<number | null>(null);
+  const [isLoadingCredits, setIsLoadingCredits] = useState(true);
+
+  useEffect(() => {
+    const fetchCredits = async () => {
+      if (!userId) return;
+      const { data, error } = await supabase
+        .from("users")
+        .select("credits")
+        .eq("id", userId)
+        .single();
+
+      if (error) {
+        console.error("Failed to fetch credits", error);
+      } else {
+        setCredits(data.credits);
+      }
+      setIsLoadingCredits(false);
+    };
+
+    fetchCredits();
+  }, [userId]);
 
   useEffect(() => {
     const onCallStart = () => {
@@ -112,11 +136,49 @@ const Agent = ({
         router.push("/dashboard");
       } else {
         handleGenerateFeedback(messages);
+        router.push(`/dashboard/interview/${interviewId}/feedback`);
       }
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
   const handleCall = async () => {
+    if (credits === null || credits <= 0) return;
+
+    // Decrement credits
+    const { error } = await supabase
+      .from("users")
+      .update({ credits: credits - 1 })
+      .eq("id", userId);
+
+    // Fetch the latest experience value before updating
+    const { data: profileData, error: fetchExpError } = await supabase
+      .from("profiles")
+      .select("experience")
+      .eq("id", userId)
+      .single();
+
+    if (fetchExpError) {
+      console.error("Failed to fetch latest experience:", fetchExpError);
+      return;
+    }
+
+    const newExperience = (profileData?.experience ?? 0) + 20;
+
+    const { error: experror } = await supabase
+      .from("profiles")
+      .update({ experience: newExperience })
+      .eq("id", userId);
+
+    if (experror) {
+      console.error("Failed to update experience:", experror);
+      return;
+    }
+
+    if (error) {
+      console.error("Failed to decrement credits:", error);
+      return;
+    }
+    setCredits((prev) => (prev !== null ? prev - 1 : prev));
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
@@ -149,31 +211,45 @@ const Agent = ({
 
   return (
     <>
-        {/* AI Interviewer Card */}
-        <div className="flex flex-col items-center justify-center gap-2 p-7 h-[60vh]  bg-secondary rounded-4xl border flex-1 sm:basis-1/2 w-full relative">
-          <div className="flex flex-col items-center justify-center">
+      {/* AI Interviewer Card */}
+      {(credits === 0 || credits === null) && (
+        <div className="bg-red-100 border-2 border-gray-900 text-black px-4 py-3 rounded-2xl mb-4 hover:-translate-0.5 hover:shadow-[6px_6px_0_black]">
+          <p>
+            You’re out of credits.{" "}
+            <Link
+              href="/dashboard/credits"
+              className="font-semibold underline text-black"
+            >
+              Buy more here
+            </Link>
+            .
+          </p>
+        </div>
+      )}
+      <div className="flex flex-col items-center justify-center gap-2 p-7 h-[60vh]  bg-secondary rounded-4xl border flex-1 sm:basis-1/2 w-full relative">
+        <div className="flex flex-col items-center justify-center">
           <div className="z-10 p-5 flex items-center justify-center bg-gray-200 rounded-full sm:size-[100px] md:size-[120px] relative">
             <img
               src="/ai-avatar.png"
               alt="profile-image"
               className="object-cover md:w-[65px] md:h-[54px] w-[44px] h-[36px]"
             />
-            {isSpeaking && <span className="absolute inline-flex size-5/6 animate-ping rounded-full bg-primary-200 opacity-75" />}
+            {isSpeaking && (
+              <span className="absolute inline-flex size-5/6 animate-ping rounded-full bg-primary-200 opacity-75" />
+            )}
           </div>
           <h3>AI Interviewer</h3>
-          </div>
-          {/* User Profile Card */}
+        </div>
+        {/* User Profile Card */}
         <div className="rounded-2xl w-fit">
           <div className="bg-gray-200 p-5 px-10 rounded-lg absolute bottom-10 right-10">
-            <UserButton/>
+            <UserButton />
           </div>
         </div>
-        </div>
-
-        
+      </div>
 
       {messages.length > 0 && (
-        <div className="bg-secondary p-0.5 mt-3 rounded-2xl w-full">
+        <div className="bg-secondary border-2 p-0.5 mt-3 rounded-2xl w-full">
           <div className="bg-secondary rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center">
             <p
               key={lastMessage}
@@ -191,14 +267,17 @@ const Agent = ({
 
       <div className="w-full flex justify-center">
         {callStatus !== "ACTIVE" ? (
-          <button className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-black rounded-2xl  min-w-28 cursor-pointer items-center justify-center overflow-visible mt-6" onClick={() => handleCall()}>
+          <button
+            className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-black rounded-2xl min-w-28 cursor-pointer items-center justify-center overflow-visible mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleCall}
+            disabled={credits === 0 || isLoadingCredits}
+          >
             <span
               className={cn(
                 "absolute animate-ping rounded-full opacity-75",
                 callStatus !== "CONNECTING" && "hidden"
               )}
             />
-
             <span className="relative">
               {callStatus === "INACTIVE" || callStatus === "FINISHED"
                 ? "Call"
@@ -206,7 +285,10 @@ const Agent = ({
             </span>
           </button>
         ) : (
-          <button className="inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-500 border border-transparent rounded-2xl shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-600  min-w-28 mt-6" onClick={() => handleDisconnect()}>
+          <button
+            className="inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-500 border border-transparent rounded-2xl shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-600  min-w-28 mt-6"
+            onClick={handleDisconnect}
+          >
             End
           </button>
         )}

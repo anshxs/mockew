@@ -22,7 +22,8 @@ const UserButton = dynamic(() => import("@stackframe/stack").then(mod => mod.Use
 export default function Header() {
   return (
     <header className="w-full fixed top-0 z-50 backdrop-blur-sm bg-white/70 px-6 py-2 flex items-center justify-between">
-      <SparklesText className="text-xl font-extrabold">MOCKEW AI</SparklesText>
+
+      <Link href="/"><SparklesText className="text-xl font-extrabold">MOCKEW AI</SparklesText></Link>
 
       <div className="flex items-center gap-2">
         
@@ -48,6 +49,11 @@ export default function Header() {
                     Dashboard
                   </Button>
                 </Link>
+                <Link href="/dashboard/dbg">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
+                    Debug Feed
+                  </Button>
+                </Link>
                 <Link href="/dashboard/resume-build">
                   <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
                     Resume Builder
@@ -63,15 +69,38 @@ export default function Header() {
                     Code Reviewer
                   </Button>
                 </Link>
-                <Link href="/cover-gen">
+                <Link href="/dashboard/logo-maker">
                   <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
-                    Cover Page/Letter
+                    Logo Maker
                   </Button>
                 </Link>
+                <Link href="/top20">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
+                    Top 20 Ideas
+                  </Button>
+                </Link>
+                <Link href="/dashboard/code-to-img">
+                  <Button variant="ghost" className="w-full border-2 justify-start bg-secondary">
+                    Code to Image
+                  </Button>
+                </Link>
+                
               </div>
             </div>
 
               <div className="grid grid-cols-2 mt-10 gap-2">
+                <div className="col-span-2 justify-between">
+              <Link href="/profile">
+                <Button variant="ghost" className="w-full overflow-hidden whitespace-nowrap truncate border-2 h-14 justify-between bg-secondary">
+                  <div className="flex flex-col items-start">
+                    <span className="text-md font-semibold">Profile</span>
+                    <span className="text-xs text-muted-foreground">Manage ur profile</span>
+                  </div>
+                  <UserButton/>
+                </Button>
+              </Link>
+              </div>
+              
               <Link href="/terms-and-conditions">
                 <Button variant="ghost" className="w-full overflow-hidden whitespace-nowrap truncate border-2 h-14 justify-start bg-secondary">
                   Terms and Conditions

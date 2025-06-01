@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/components/Header"; // path depends on your file structure
 import { Jost } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster";
+import FloatingFeedback from "@/components/FloatingFeedback";
+import Script from "next/script";
 
 export const myFont = Jost({
   subsets: ['latin'],
@@ -24,6 +26,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={myFont.className}>
+      <head>
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="antialiased">
         <StackProvider app={stackServerApp}>
           <StackTheme>
@@ -31,7 +39,7 @@ export default function RootLayout({
               {/* Background Pattern */}
               <div className="fixed inset-0 -z-10">
                 <div
-                  className="absolute top-1/2 left-1/2 h-[300px] w-[300px] animate-pulse rounded-full bg-gradient-to-br from-pink-400 via-orange-300 to-yellow-200 opacity-70 blur-3xl"
+                  className="absolute top-1/3 left-1/3 h-[400px] w-[400px] animate-pulse rounded-full bg-gradient-to-br from-pink-400 via-[#39caff] to-[#4dff68] opacity-70 blur-3xl"
                   aria-hidden="true"
                 />
               </div>
@@ -40,6 +48,7 @@ export default function RootLayout({
               <Header />
               <main className="pt-12 md:pt-20 ">
                 {children}
+                <FloatingFeedback/>
                 <Toaster />
               </main>
             </div>

@@ -12,9 +12,10 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { DockDemo } from "@/components/DockDemo";
 import PricingDemoUI from "@/components/PricingComponent"
 import { useRouter } from "next/navigation";
+import { TextAnimate } from './magicui/text-animate';
+import { BlurFade } from './magicui/blur-fade';
 
 function OnBoardMain() {
     const router = useRouter();
@@ -24,40 +25,62 @@ function OnBoardMain() {
     };
 
     const faqs = [
-        {
-            question: "What makes Sensai unique as a career development tool?",
-            answer:
-                "Sensai combines AI-powered career tools with industry-specific insights to help you advance your career. Our platform offers three main features: an intelligent resume builder, a cover letter generator, and an adaptive interview preparation system. Each tool is tailored to your industry and skills, providing personalized guidance for your professional journey.",
-        },
-        {
-            question: "How does Sensai create tailored content?",
-            answer:
-                "Sensai learns about your industry, experience, and skills during onboarding. It then uses this information to generate customized resumes, cover letters, and interview questions. The content is specifically aligned with your professional background and industry standards, making it highly relevant and effective.",
-        },
-        {
-            question: "How accurate and up-to-date are Sensai's industry insights?",
-            answer:
-                "We update our industry insights weekly using advanced AI analysis of current market trends. This includes salary data, in-demand skills, and industry growth patterns. Our system constantly evolves to ensure you have the most relevant information for your career decisions.",
-        },
-        {
-            question: "Is my data secure with Sensai?",
-            answer:
-                "Absolutely. We prioritize the security of your professional information. All data is encrypted and securely stored using industry-standard practices. We use Clerk for authentication and never share your personal information with third parties.",
-        },
-        {
-            question: "How can I track my interview preparation progress?",
-            answer:
-                "Sensai tracks your performance across multiple practice interviews, providing detailed analytics and improvement suggestions. You can view your progress over time, identify areas for improvement, and receive AI-generated tips to enhance your interview skills based on your responses.",
-        },
-        {
-            question: "Can I edit the AI-generated content?",
-            answer:
-                "Yes! While Sensai generates high-quality initial content, you have full control to edit and customize all generated resumes, cover letters, and other content. Our markdown editor makes it easy to refine the content to perfectly match your needs.",
-        },
-    ];
+  {
+    question: "What is Mockew AI?",
+    answer:
+      "Mockew AI is an all-in-one career and productivity platform for developers. It features an AI-powered mock interviewer, a collaborative Debug Feed, resume builder, code-to-image converter, and several other tools to help you grow, build, and stand out in the tech industry.",
+  },
+  {
+    question: "How does the AI Mock Interviewer work?",
+    answer:
+      "The AI Mock Interviewer simulates real interview scenarios using natural language processing and adaptive question flow. It tailors each session to your skill level and role — whether you're applying for frontend, backend, or full-stack roles — and provides instant feedback to help you improve.",
+  },
+  {
+    question: "What is the Debug Feed?",
+    answer:
+      "The Debug Feed is a social space where developers post coding problems, share solutions, and engage with the community. It's like Stack Overflow meets Twitter — designed to promote learning, collaboration, and visibility within the developer community.",
+  },
+  {
+    question: "Can I build and export my resume with Mockew AI?",
+    answer:
+      "Yes. The resume builder in Mockew AI allows you to create beautifully formatted resumes tailored to your job goals. You can export in PDF format, update anytime, and even share it via your public profile.",
+  },
+  {
+    question: "What is Linkdance?",
+    answer:
+      "Linkdance is a Linktree-style profile builder for developers. You can add your GitHub, portfolio, blog, social links, and even showcase your resume — all in a clean, developer-friendly layout.",
+  },
+  {
+    question: "What does the Code Reviewer do?",
+    answer:
+      "The Code Reviewer uses AI to analyze your code for best practices, optimization, and potential bugs. It gives you constructive feedback and suggestions in seconds, helping you level up your coding game.",
+  },
+  {
+    question: "What is 'Top 20 Product Ideas'?",
+    answer:
+      "It's a creative ideation tool that generates startup or project ideas using AI based on current trends and your interests. Ideal for indie hackers, student projects, or hackathon prep.",
+  },
+  {
+    question: "What can I do with the Code to Image tool?",
+    answer:
+      "This feature converts your code snippets into beautifully styled images for social sharing or presentations. Customize themes, fonts, and backgrounds to showcase your code with flair.",
+  },
+  {
+    question: "Is Mockew AI free to use?",
+    answer:
+      "Mockew AI offers a free plan with access to core tools. We also have premium plans that unlock advanced features like unlimited mock interviews, logo maker, and full code review capabilities.",
+  },
+  {
+    question: "Who is Mockew AI for?",
+    answer:
+      "Mockew AI is built for developers at all stages — from students and job seekers to experienced engineers and indie makers. Whether you're prepping for an interview or sharing your latest project, Mockew AI is your companion.",
+  },
+];
+
 
     return (
         <>
+        <BlurFade inView>
             <div onClick={goToDashboard} className="group relative mx-auto flex items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] mt-8">
 
                 <span
@@ -75,36 +98,78 @@ function OnBoardMain() {
                 />
                 🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-neutral-500" />
                 <AnimatedGradientText className="text-sm font-medium">
-                    Introducing Mockew AI
+                    New: DebugFeed
                 </AnimatedGradientText>
                 <ChevronRight
                     className="ml-1 size-4 stroke-neutral-500 transition-transform
  duration-300 ease-in-out group-hover:translate-x-0.5"
                 />
             </div>
+            </BlurFade>
             <h1
-                className="text-5xl font-extrabold text-center"><AnimatedGradientText
+                className="text-5xl font-extrabold -mb-3 text-center"><AnimatedGradientText
                     speed={2}
                 >
                     MOCKEW AI
                 </AnimatedGradientText> - INTERVIEW PAIN SIMULATOR</h1>
-            <p className="text-lg">Congrats on being smart enough to choose Mockew. now prove it - watch the demo video before clicking random buttons like a maniac.</p>
-            <div className="relative z-0 mb-40">
+            <TextAnimate
+      variants={{
+        hidden: {
+          opacity: 0,
+          y: 30,
+          rotate: 45,
+          scale: 0.5,
+        },
+        show: (i) => ({
+          opacity: 1,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          transition: {
+            delay: i * 0.1,
+            duration: 0.4,
+            y: {
+              type: "spring",
+              damping: 12,
+              stiffness: 200,
+              mass: 0.8,
+            },
+            rotate: {
+              type: "spring",
+              damping: 8,
+              stiffness: 150,
+            },
+            scale: {
+              type: "spring",
+              damping: 10,
+              stiffness: 300,
+            },
+          },
+        }),
+        exit: (i) => ({
+          opacity: 0,
+          y: 30,
+          rotate: 45,
+          scale: 0.5,
+          transition: {
+            delay: i * 0.1,
+            duration: 0.4,
+          },
+        }),
+      }}
+      by="character"
+    >
+      Congrats on being smart enough to choose Mockew. now prove it - watch the demo video before clicking random buttons like a maniac.
+    </TextAnimate>
+            <div className="relative z-0 mb-40 mt-5">
                 <div className="absolute inset-0 z-[-1] rounded-2xl p-[2px] bg-[linear-gradient(to_right,_red,_orange,_yellow,_green,_blue,_indigo,_violet)] blur-md" />
 
-                <div className="relative rounded-4xl bg-white p-3 shadow-lg">
+                <div className="relative rounded-[35px] bg-white p-1 shadow-lg">
                     <HeroVideoDialog
                         className="block dark:hidden rounded-4xl"
                         animationStyle="top-in-bottom-out"
                         videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
                         thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-                        thumbnailAlt="Hero Video"
-                    />
-                    <HeroVideoDialog
-                        className="hidden dark:block  rounded-4xl"
-                        animationStyle="top-in-bottom-out"
-                        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-                        thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
                         thumbnailAlt="Hero Video"
                     />
                 </div>
@@ -143,7 +208,6 @@ function OnBoardMain() {
                     </div>
                 </div>
             </section>
-            <DockDemo />
             <PricingDemoUI/>
         </>
     )

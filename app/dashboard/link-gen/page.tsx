@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -30,24 +30,39 @@ export default function Dashboard() {
   const userId = user?.id || ""
   const [userLinks, setUserLinks] = useState<LinkData[]>([])
   const [loading, setLoading] = useState(false)
+  const [plan, setPlan] = useState<string | null>(null)
   const { toast } = useToast()
   const router = useRouter()
 
-  // Load user's links
   const loadUserLinks = async () => {
     if (!userId.trim()) return
 
     setLoading(true)
     try {
-      const { data, error } = await supabase
-        .from("links")
-        .select("*")
-        .eq("user_id", userId)
-        .order("updated_at", { ascending: false })
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('plan')
+        .eq('id', userId)
+        .single()
 
-      if (error) throw error
+      if (profileError || !profileData) {
+        setPlan('Free') // fallback if profile fetch fails
+        setLoading(false)
+        return
+      }
 
-      setUserLinks(data || [])
+      setPlan(profileData.plan)
+
+      if (profileData.plan !== 'Free') {
+        const { data, error } = await supabase
+          .from("links")
+          .select("*")
+          .eq("user_id", userId)
+          .order("updated_at", { ascending: false })
+
+        if (error) throw error
+        setUserLinks(data || [])
+      }
     } catch (error) {
       console.error("Error loading links:", error)
       toast({
@@ -60,7 +75,6 @@ export default function Dashboard() {
     }
   }
 
-  // Delete a link
   const deleteLink = async (linkId: string) => {
     try {
       const { error } = await supabase.from("links").delete().eq("id", linkId)
@@ -82,40 +96,104 @@ export default function Dashboard() {
     }
   }
 
-  // Load links when userId changes
   useEffect(() => {
     if (userId.trim()) {
       loadUserLinks()
     }
   }, [userId])
 
-  // Load userId from localStorage on mount
-  // Save userId to localStorage when it changes
+  if (loading) {
+    return (
+      <div className="text-center py-12">
+        <p>Loading your links...</p>
+      </div>
+    )
+  }
+
+  if (plan === 'Free') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
+        <Button onClick={() => router.push('/pricing')} className="mb-6">
+          Upgrade Plan
+        </Button>
+        <h2 className="text-2xl font-bold mb-4">You're on the Free Plan</h2>
+        <p className="text-muted-foreground">
+          Upgrade your plan to unlock LinkDance and start sharing your custom link page.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-row justify-between mb-8">
         <h1 className="text-3xl font-bold">LinkDance</h1>
-          <div className="flex justify-end">
-            <Button onClick={() => router.push(`/editor?userId=${userId}`)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Create New Link
-            </Button>
-          </div>
+        <div className="flex justify-end">
+          <Button
+            onClick={async () => {
+              
+              const { data: profileData, error: fetchExpError } = await supabase
+                .from("profiles")
+                .select("experience")
+                .eq("id", user?.id)
+                .single();
+
+              if (fetchExpError) {
+                console.error("Failed to fetch latest experience:", fetchExpError);
+                return;
+              }
+
+              const newExperience = (profileData?.experience ?? 0) + 10;
+
+              const { error: experror } = await supabase
+                .from("profiles")
+                .update({ experience: newExperience })
+                .eq("id", user?.id);
+
+              if (experror) {
+                console.error("Failed to update experience:", experror);
+                return;
+              }
+              router.push(`/dashboard/link-gen/editor?userId=${userId}`);
+            }}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create New Link
+          </Button>
+        </div>
       </div>
 
-      {loading ? (
-        <div className="text-center py-8">
-          <p>Loading your links...</p>
-        </div>
-      ) : !user ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground mb-4">Please sign in to access your dashboard.</p>
-        </div>
-      ) : userLinks.length === 0 ? (
+      {userLinks.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground mb-4">You haven't created any links yet.</p>
-          <Button onClick={() => router.push(`/editor?userId=${userId}`)}>
+          <Button
+            onClick={async () => {
+              
+              const { data: profileData, error: fetchExpError } = await supabase
+                .from("profiles")
+                .select("experience")
+                .eq("id", user?.id)
+                .single();
+
+              if (fetchExpError) {
+                console.error("Failed to fetch latest experience:", fetchExpError);
+                return;
+              }
+
+              const newExperience = (profileData?.experience ?? 0) + 5;
+
+              const { error: experror } = await supabase
+                .from("profiles")
+                .update({ experience: newExperience })
+                .eq("id", user?.id);
+
+              if (experror) {
+                console.error("Failed to update experience:", experror);
+                return;
+              }
+              router.push(`/dashboard/link-gen/editor?userId=${userId}`);
+            }}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Create Your First Link
           </Button>
@@ -123,7 +201,7 @@ export default function Dashboard() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {userLinks.map((link) => (
-            <Card key={link.id} className="rounded-[30px]">
+            <Card key={link.id} className="rounded-[30px] bg-[#f4f4f4]">
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-3">
                   {link.profile_image && (

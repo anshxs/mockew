@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import React, { useState } from "react";
+import { SparklesText } from "./magicui/sparkles-text";
 
 const PriceDemoUI = () => {
 
@@ -33,19 +34,17 @@ const PriceDemoUI = () => {
           </a>
           <ul className="text-sm text-left text-gray-600 space-y-4">
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>10,000 visitors</span>
+              <CheckIcon /> <span className="bg-white font-bold border-2 border-blue-600 text-blue-600 px-1 rounded">1</span><span> Mock interview /mo</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Unlimited widgets</span>
+              <CheckIcon /> <span>Access to DebugFeed</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>All analytics features</span>
+              <CheckIcon /> <span>Access to Top 20 Section</span>
             </li>
+            
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Priority support</span>
-            </li>
-            <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Lifetime updates</span>
+              <CheckIcon /> <span>Priority Support</span>
             </li>
           </ul>
         </div>
@@ -76,19 +75,41 @@ const PriceDemoUI = () => {
           </a>
           <ul className="text-sm text-left text-gray-600 space-y-4">
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>10,000 visitors</span>
+              <CheckIcon /> <span>Everything in Free</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Unlimited widgets</span>
+              <CheckIcon /> <span className="bg-white font-bold border-black border-2 text-black px-1 rounded">5</span><span>Mock interview /mo</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>All analytics features</span>
+              <svg
+      className="h-5 w-5 text-white bg-blue-600 p-0.5 rounded-full"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        fillRule="evenodd"
+        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+        clipRule="evenodd"
+      />
+    </svg> <SparklesText sparklesCount={3} className="text-md font-light">Blue Tick</SparklesText>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Priority support</span>
+              <CheckIcon /> <span>Resume Builder Full Access</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon /> <span>Lifetime updates</span>
+              <CheckIcon /> <span>Link Dance Full Access</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <CheckIcon /> <span>Code Reviewer Agent Access</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <CheckIcon /> <span>Logo Maker Access</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <CheckIcon /> <span>Code To Image Access</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <CheckIcon /> <span>Priority Support</span>
             </li>
           </ul>
         </div>
@@ -119,19 +140,29 @@ const PriceDemoUI = () => {
           </a>
           <ul className="text-sm text-left text-white space-y-4">
             <li className="flex items-center space-x-3">
-              <CheckIcon2 /> <span>10,000 visitors</span>
+              <CheckIcon2 /> <span>Everything in Recommended</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon2 /> <span>Unlimited widgets</span>
+             <svg
+      className="h-5 w-5 text-black bg-[#fff024] border-2 border-amber-50 p-0.5 rounded-full"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        fillRule="evenodd"
+        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+        clipRule="evenodd"
+      />
+    </svg> <SparklesText sparklesCount={3} className="text-md font-light">Golden Tick</SparklesText>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon2 /> <span>All analytics features</span>
+              <CheckIcon2 /> <span className="bg-white font-bold border-black border-2 text-red-500 px-1 rounded">15</span><span>Mock interview /mo</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon2 /> <span>Priority support</span>
+              <CheckIcon2 /> <span>Priority Support</span>
             </li>
             <li className="flex items-center space-x-3">
-              <CheckIcon2 /> <span>Lifetime updates</span>
+              <CheckIcon2 /> <span>Priority Features Add Request</span>
             </li>
           </ul>
         </div>

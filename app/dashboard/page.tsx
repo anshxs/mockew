@@ -11,6 +11,7 @@ import supabase from "@/lib/supabase";
 export default function Dashboard() {
   const user = useUser();
   const router = useRouter();
+  const [credits, setCredits] = useState<number | null>(null);
 
   const [feedbacks, setFeedbacks] = useState<Record<string, any>>({});
   const [userInterviews, setUserInterviews] = useState<Interview[]>([]);
@@ -51,6 +52,18 @@ export default function Dashboard() {
       if (!user?.id) return;
       setLoading(true);
 
+      const { data: userData, error: userError } = await supabase
+        .from("users")
+        .select("credits")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (userError) {
+        console.error("Error fetching credits:", userError);
+      } else {
+        setCredits(userData?.credits || 0);
+      }
+
       const { data: interviews, error: interviewError } = await supabase
         .from("interviews")
         .select("*")
@@ -66,7 +79,10 @@ export default function Dashboard() {
         .limit(20);
 
       if (interviewError || latestError) {
-        console.error("Error fetching interviews:", interviewError || latestError);
+        console.error(
+          "Error fetching interviews:",
+          interviewError || latestError
+        );
       }
 
       setUserInterviews(interviews || []);
@@ -114,8 +130,17 @@ export default function Dashboard() {
       <div className="flex flex-col gap-4 mt-8">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">Your Interviews</h2>
-          <Button onClick={goToIntGen}>Create an interview</Button>
+          <div className="flex items-center gap-2">
+            {credits !== null && (
+              <Button variant={"secondary"} onClick={()=>router.push('/dashboard/credits')} className="border-2">
+                Credits:{" "}
+                <span className="text-green-600 font-bold">{credits}</span>
+              </Button>
+            )}
+            <Button onClick={goToIntGen}>Create an interview</Button>
+          </div>
         </div>
+
         <div className="flex flex-wrap gap-4">
           {loading ? (
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
@@ -135,7 +160,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 mt-8">
+      <div className="flex flex-col gap-4 mt-8 mb-12">
         <h2 className="text-2xl font-semibold">Take Interviews</h2>
         <div className="flex flex-wrap gap-4">
           {loading ? (

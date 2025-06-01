@@ -52,6 +52,7 @@ interface Feedback {
     userId?: string;
     interviewId?: string;
     profileImage?: string | null;
+    usermail: string;
     feedbackId?: string;
     type: "generate" | "interview";
     questions?: string[];

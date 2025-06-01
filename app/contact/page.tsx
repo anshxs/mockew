@@ -29,7 +29,8 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container max-w-screen-xl px-4 md:px-6 py-12">
+    <div className="flex justify-center">
+    <div className="container px-4 md:px-6 py-12">
       <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Contact Us</h1>
@@ -170,6 +171,7 @@ export default function ContactPage() {
           </Card>
         </div>
       </div>
+    </div>
     </div>
   )
 }
