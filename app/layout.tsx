@@ -25,14 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={myFont.className}>
+    <html lang="en">
       <head>
         <Script
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="beforeInteractive"
         />
       </head>
-      <body className="antialiased">
+      <body className="font-jost">
+
         <StackProvider app={stackServerApp}>
           <StackTheme>
             <div className="relative min-h-screen overflow-hidden">
