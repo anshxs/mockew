@@ -76,7 +76,7 @@ export default function RefundPolicyPage() {
 
           <section className="space-y-3">
             <h2 className="text-2xl font-bold">Contact Us</h2>
-            <p>If you have any questions about our refund policy, please contact us at anshsxa@gmail.com.</p>
+            <p>If you have any questions about our refund policy, please contact us at mockewai@gmail.com.</p>
           </section>
         </div>
       </div>
