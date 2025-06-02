@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="font-jost">
       <head>
         <Script
           src="https://checkout.razorpay.com/v1/checkout.js"
