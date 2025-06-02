@@ -20,7 +20,7 @@ export default function ContactPage() {
     e.preventDefault()
 
     // Create mailto link with form data
-    const mailtoLink = `mailto:anshsxa@gmail.com?subject=${encodeURIComponent(
+    const mailtoLink = `mailto:mockewai@gmail.com?subject=${encodeURIComponent(
       subject || "Contact Form Submission",
     )}&body=${encodeURIComponent(`Name: ${name}\n\n${message}`)}`
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
               <Mail className="h-5 w-5" />
               Send us a message
             </CardTitle>
-            <CardDescription>Your message will be sent to anshsxa@gmail.com</CardDescription>
+            <CardDescription>Your message will be sent to mockewai@gmail.com</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
@@ -129,8 +129,8 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium">Email</h3>
                   <p className="text-sm text-muted-foreground">
-                    <Link href="mailto:anshsxa@gmail.com" className="hover:underline">
-                      anshsxa@gmail.com
+                    <Link href="mailto:mockewai@gmail.com" className="hover:underline">
+                      mockewai@gmail.com
                     </Link>
                   </p>
                 </div>
