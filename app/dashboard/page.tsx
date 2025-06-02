@@ -12,45 +12,83 @@ export default function Dashboard() {
   const user = useUser();
   const router = useRouter();
   const [credits, setCredits] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const [feedbacks, setFeedbacks] = useState<Record<string, any>>({});
   const [userInterviews, setUserInterviews] = useState<Interview[]>([]);
   const [latestInterviews, setLatestInterviews] = useState<Interview[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
 
   useEffect(() => {
     const syncUser = async () => {
-      if (!user?.primaryEmail) return;
-      const userCacheKey = `userExists:${user.id}`;
-      if (localStorage.getItem(userCacheKey) === "true") return;
+      if (!user?.primaryEmail) {
+        setLoading(false);
+        return;
+      }
 
-      const { data } = await supabase
+      // Check if user already exists
+      const { data: existingUser, error: fetchError } = await supabase
         .from("users")
-        .select("*")
+        .select("id")
         .eq("email", user.primaryEmail)
         .maybeSingle();
 
-      if (!data) {
-        await supabase.from("users").insert([
-          {
-            id: user.id,
-            email: user.primaryEmail,
-            name: user.displayName || null,
-            image: user.profileImageUrl || null,
-          },
-        ]);
+      if (fetchError) {
+        console.error("Fetch error:", fetchError);
+        setLoading(false);
+        return;
       }
 
-      localStorage.setItem(userCacheKey, "true");
+      if (existingUser) {
+        setLoading(false);
+        return;
+      }
+
+      // Generate unique username
+      const baseUsername = user.primaryEmail.split('@')[0];
+      let finalUsername = baseUsername;
+      let attempt = 1;
+
+      while (true) {
+        const { data: existingUsername } = await supabase
+          .from("users")
+          .select("id")
+          .eq("username", finalUsername)
+          .maybeSingle();
+
+        if (!existingUsername) break;
+        finalUsername = `${baseUsername}${attempt++}`;
+      }
+
+      // Insert new user
+      const { error: insertError } = await supabase.from("users").insert([
+        {
+          id: user.id,
+          email: user.primaryEmail,
+          name: user.displayName || null,
+          image: user.profileImageUrl || null,
+          username: finalUsername,
+        },
+      ]);
+
+      if (insertError) {
+        console.error("User insert error:", insertError);
+        setLoading(false);
+        return;
+      }
+
+      // Refresh the page after inserting
+      router.refresh();
     };
 
     syncUser();
-  }, [user]);
+  }, [user, router]);
+
 
   useEffect(() => {
     const fetchData = async () => {
       if (!user?.id) return;
-      setLoading(true);
+      setLoading2(true);
 
       const { data: userData, error: userError } = await supabase
         .from("users")
@@ -87,7 +125,7 @@ export default function Dashboard() {
 
       setUserInterviews(interviews || []);
       setLatestInterviews(latest || []);
-      setLoading(false);
+      setLoading2(false);
     };
 
     fetchData();
@@ -125,6 +163,17 @@ export default function Dashboard() {
   const hasPastInterviews = userInterviews.length > 0;
   const hasUpcomingInterviews = latestInterviews.length > 0;
 
+  if (loading) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center flex-col text-center px-4">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+        <p className="text-lg font-medium text-gray-700">
+          Crafting the best dashboard experience for you...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="flex flex-col gap-4 mt-8">
@@ -142,7 +191,7 @@ export default function Dashboard() {
         </div>
 
         <div className="flex flex-wrap gap-4">
-          {loading ? (
+          {loading2 ? (
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           ) : hasPastInterviews ? (
             userInterviews.map((interview) => (
@@ -163,7 +212,7 @@ export default function Dashboard() {
       <div className="flex flex-col gap-4 mt-8 mb-12">
         <h2 className="text-2xl font-semibold">Take Interviews</h2>
         <div className="flex flex-wrap gap-4">
-          {loading ? (
+          {loading2 ? (
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           ) : hasUpcomingInterviews ? (
             latestInterviews.map((interview) => (

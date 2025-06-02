@@ -65,7 +65,7 @@ export default function Pricing() {
       alert("Razorpay is not ready yet.");
       return;
     }
-  const planId = plan === "Paid" ? "plan_QbXXxYYS9Inabj" : "plan_QbXYMBHwaqgyKo";
+  const planId = plan === "Paid" ? "plan_QcEH7KGbegQhr8" : "plan_QcEHS69Iu6MVue";
 
   const res = await fetch("/api/razorpay/subscribe", {
     method: "POST",
