@@ -16,28 +16,29 @@ export const myFont = Jost({
 
 export const metadata: Metadata = {
   title: "Mockew AI – Developer Toolkit for Careers & Creativity",
-  description: "Mockew AI offers AI mock interviews, a dev social feed, resume builder, code reviewer, and more — all in one platform for modern developers.",
+  description:
+    "Mockew AI offers AI mock interviews, a dev social feed, resume builder, code reviewer, and more — all in one platform for modern developers.",
+  metadataBase: new URL("https://mockewai.vercel.app"),
   keywords: [
     "Mockew AI",
     "AI mock interview",
     "developer tools",
-    "resume builder for developers",
+    "resume builder",
     "debug feed",
-    "developer social network",
+    "developer social",
     "code to image",
     "linktree for developers",
     "code reviewer",
     "tech interview prep"
   ],
-  authors: [{ name: "Ansh", url: "https://mockew.ai" }],
+  authors: [{ name: "Ansh", url: "https://mockewai.vercel.app" }],
   creator: "Mockew AI",
   publisher: "Mockew AI",
-  metadataBase: new URL("https://mockew.ai"),
   openGraph: {
     title: "Mockew AI – Developer Toolkit for Careers & Creativity",
     description:
       "Mockew AI helps developers ace interviews, build resumes, get feedback, and showcase their work with one powerful AI-driven platform.",
-    url: "https://mockew.ai",
+    url: "https://mockewai.vercel.app",
     siteName: "Mockew AI",
     images: [
       {
@@ -57,14 +58,15 @@ export const metadata: Metadata = {
     images: [
       "https://raw.githubusercontent.com/anshxs/mocked/refs/heads/main/MOCKEW.png",
     ],
-    creator: "@yourTwitterHandle", // Replace with real handle if available
+    creator: "@mockew",
   },
   icons: {
-    icon: "https://raw.githubusercontent.com/anshxs/mocked/refs/heads/main/MOCKEW.png",
-    shortcut: "https://raw.githubusercontent.com/anshxs/mocked/refs/heads/main/MOCKEW.png",
-    apple: "https://raw.githubusercontent.com/anshxs/mocked/refs/heads/main/MOCKEW.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
+
 
 export default function RootLayout({
   children,
