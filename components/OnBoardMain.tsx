@@ -81,7 +81,24 @@ function OnBoardMain() {
     return (
         <>
         <BlurFade inView>
-            <div onClick={goToDashboard} className="group relative mx-auto flex items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] mt-8">
+          <div className="w-full flex flex-col md:flex-row items-center justify-center gap-6 mt-10 px-4">
+    {/* Badge */}
+    <a
+      href="https://www.producthunt.com/products/mockew-ai?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-mockew&#0045;ai"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=973254&theme=light&t=1748928223074"
+        alt="Mockew AI on Product Hunt"
+        style={{ width: 250, height: 54 }}
+        width={250}
+        height={54}
+      />
+    </a>
+  </div>
+            {/* <div onClick={goToDashboard} className="group relative mx-auto flex items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] mt-8">
+              
 
                 <span
                     className={cn(
@@ -104,7 +121,7 @@ function OnBoardMain() {
                     className="ml-1 size-4 stroke-neutral-500 transition-transform
  duration-300 ease-in-out group-hover:translate-x-0.5"
                 />
-            </div>
+            </div> */}
             </BlurFade>
             <h1
                 className="text-5xl font-extrabold -mb-3 text-center"><AnimatedGradientText
