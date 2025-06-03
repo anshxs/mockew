@@ -185,9 +185,9 @@ function OnBoardMain() {
                     <HeroVideoDialog
                         className="block dark:hidden rounded-4xl"
                         animationStyle="top-in-bottom-out"
-                        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-                        thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-                        thumbnailAlt="Hero Video"
+                        videoSrc="https://www.youtube.com/embed/iAaSwBNMRMk?si=sMZz27ukPsRNFgfE"
+                        thumbnailSrc="https://raw.githubusercontent.com/anshxs/mocked/main/thumb"
+                        thumbnailAlt="Demo Video"
                     />
                 </div>
             </div>
