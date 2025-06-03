@@ -186,7 +186,7 @@ function OnBoardMain() {
                         className="block dark:hidden rounded-4xl"
                         animationStyle="top-in-bottom-out"
                         videoSrc="https://www.youtube.com/embed/iAaSwBNMRMk?si=sMZz27ukPsRNFgfE"
-                        thumbnailSrc="https://raw.githubusercontent.com/anshxs/mocked/main/thumb"
+                        thumbnailSrc="https://raw.githubusercontent.com/anshxs/mocked/refs/heads/main/thumb.jpg"
                         thumbnailAlt="Demo Video"
                     />
                 </div>
